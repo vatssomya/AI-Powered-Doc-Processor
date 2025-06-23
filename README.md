@@ -134,6 +134,7 @@ http://127.0.0.1:5000
 
 
 ## 📁 Folder Structure
+```bash
 ├── app.py
 ├── requirements.txt
 ├── templates/
@@ -142,6 +143,7 @@ http://127.0.0.1:5000
 │   └── style.css
 ├── output.txt
 ├── output.xlsx
+```
 
 
 ---
