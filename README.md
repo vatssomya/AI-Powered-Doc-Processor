@@ -1,6 +1,6 @@
 # 📄 Automated Document Processor
 
-> Smart offline document understanding using AI — powered by Python, Flask, and Transformers.
+> Smart document understanding using AI — powered by Python, Flask, and Transformers.
 
 ---
 
