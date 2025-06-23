@@ -1,0 +1,92 @@
+body.gradient-bg {
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  font-family: 'Segoe UI', sans-serif;
+  color: #111;
+  transition: all 0.4s ease;
+}
+
+.card {
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dark-mode {
+  background: #121212 !important;
+  color: #f2f2f2 !important;
+}
+
+.dark-mode .card {
+  background: #1e1e1e !important;
+  color: #f2f2f2 !important;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode .form-control {
+  background-color: #2c2c2c !important;
+  color: #fff !important;
+  border-color: #444;
+}
+
+.dark-mode .list-group-item {
+  background-color: #2c2c2c !important;
+  border-color: #444;
+  color: #fff;
+}
+
+footer {
+  font-size: 0.9rem;
+}
+
+#chatHistory div {
+  margin-bottom: 8px;
+}
+
+/* Fix dark mode text issues */
+.dark-mode .text-muted {
+  color: #ccc !important;
+}
+
+/* White outlines in dark mode */
+.dark-mode .card {
+  border: 1px solid #fff;
+}
+
+.dark-mode .form-control,
+.dark-mode .btn,
+.dark-mode .list-group-item {
+  border-color: #ccc;
+}
+
+/* Optional: Button hover glow in dark mode */
+.dark-mode .btn:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .card,
+body.dark-mode .accordion-item,
+body.dark-mode .form-control,
+body.dark-mode .list-group-item {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border-color: #2c2c2c;
+}
+
+body.dark-mode .btn-outline-dark {
+  border-color: #f1f1f1;
+  color: #f1f1f1;
+}

@@ -1,0 +1,13 @@
+flask
+pytesseract
+pillow
+pdf2image
+pandas
+openpyxl
+langchain
+faiss-cpu
+PyPDF2
+python-dotenv
+openai
+transformers 
+torch

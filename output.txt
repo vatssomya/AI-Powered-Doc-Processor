@@ -1,0 +1,18 @@
+
+--- Document 1 ---
+Invoice No: INV-2025-619
+Date: 12/8/2025
+Party Name: Vista Exports Ltd.
+HS Code: 620322
+
+--- Document 2 ---
+Invoice No: INV-2025-797
+Date: 16/5/2025
+Party Name: Vista Exports Ltd.
+HS Code: 620322
+
+--- Document 3 ---
+Invoice No: INV-2025-947
+Date: 26/12/2025
+Party Name: Pinnacle Supplies
+HS Code: 620322
