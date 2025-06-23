@@ -176,6 +176,8 @@ Once installed and the models are downloaded the first time, everything works 10
 ## 👨‍💻 Developer
 
 **Somya Vats**
+
+
 Passionate about building intelligent systems, refining user experience, and bridging the gap between raw data and real-world impact.  
 
 Driven by curiosity. Backed by code. Built to scale.
