@@ -90,6 +90,7 @@ _Adding soon_
 ```bash
 git clone [https://github.com/your-username/automated-doc-processor.git](https://github.com/your-username/automated-doc-processor.git)
 cd automated-doc-processor
+```
 
 
 ### 2. (Optional) Create a Virtual Environment
@@ -97,13 +98,18 @@ cd automated-doc-processor
 ```bash
 python -m venv venv
 venv\Scripts\activate # On Windows
+```
+
 # or
+```bash
 source venv/bin/activate # On macOS/Linux
+```
 
 ### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### 4. Install Tesseract OCR
 
@@ -113,15 +119,18 @@ After installing, update the path in `app.py`:
 
 ```python
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+```
 
 ### 5. Run the App
 
 ```bash
 python app.py
+```
 
 Then, open your browser and go to:
 ```cpp
 http://127.0.0.1:5000
+```
 
 
 ## 📁 Folder Structure
@@ -138,7 +147,7 @@ http://127.0.0.1:5000
 ---
 
 ## 📦 requirements.txt
-
+```bash
 Flask==2.3.2
 pytesseract==0.3.10
 pdf2image==1.16.3
@@ -146,7 +155,7 @@ Pillow==9.5.0
 transformers==4.40.1
 torch==2.2.2
 pandas==2.2.2
-
+```
 
 ---
 
@@ -165,9 +174,9 @@ Once installed and the models are downloaded the first time, everything works 10
 ## 👨‍💻 Developer
 
 **Somya Vats**
-Student @ UPES | Developer | Tech Explorer
+Passionate about building intelligent systems, refining user experience, and bridging the gap between raw data and real-world impact.  
 
-Built with ❤️, styled with ✨, and powered by AI.
+Driven by curiosity. Backed by code. Built to scale.
 
 ---
 
