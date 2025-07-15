@@ -1,18 +1,13 @@
 
 --- Document 1 ---
-Invoice No: INV-2025-619
-Date: 12/8/2025
-Party Name: Vista Exports Ltd.
-HS Code: 620322
+Name: Suresh Sharma
+DOB: 01/10/1999
+Nationality: Indian
+Place of Issue: Hyderabad
+Date of Issue: 14/08/2023
+Date of Expiry: 11/08/2033
 
 --- Document 2 ---
-Invoice No: INV-2025-797
-Date: 16/5/2025
-Party Name: Vista Exports Ltd.
-HS Code: 620322
-
---- Document 3 ---
-Invoice No: INV-2025-947
-Date: 26/12/2025
-Party Name: Pinnacle Supplies
-HS Code: 620322
+Name: Date of Birth
+Nationality: Passport
+Place of Issue: Date of Issue

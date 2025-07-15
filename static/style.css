@@ -4,6 +4,17 @@ body.gradient-bg {
   color: #111;
   transition: all 0.4s ease;
 }
+.logo-left {
+  height: 30px;
+  margin-top: 1px;
+  margin-left: 1px;
+}
+
+.btn-success {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
 
 .card {
   border-radius: 12px;

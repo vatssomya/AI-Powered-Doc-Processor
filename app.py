@@ -16,14 +16,37 @@ qa_pipeline = pipeline("question-answering", model="distilbert-base-cased-distil
 # Global context for QnA
 full_text_global = ""
 
-def extract_fields(text):
-    patterns = [
+# Document-type-specific field dictionaries
+DOCUMENT_PATTERNS = {
+    "invoice": [
         (r'Invoice\s*No[:\s]*([\w\-\/]+)', "Invoice No"),
         (r'Date[:\s]*([0-9]{1,2}[-/][0-9]{1,2}[-/][0-9]{2,4})', "Date"),
         (r'Party\s*Name[:\s]*(.*)', "Party Name"),
         (r'Total[:\s]*Rs\.?\s*([0-9,\.]+)', "Total Amount"),
-        (r'HS\s*Code[:\s]*([\d\.]+)', "HS Code"),
+        (r'HS\s*Code[:\s]*([\d\.]+)', "HS Code")
+    ],
+    "passport": [
+        (r'Name[:\s\n]*([A-Za-z ]+)', "Name"),
+        (r'Date\s*of\s*Birth[:\s\n]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', "DOB"),
+        (r'Nationality[:\s\n]*([A-Za-z]+)', "Nationality"),
+        (r'Passport\s*No[:\s\n]*([A-Z0-9]+)', "Passport No"),
+        (r'Place\s*of\s*Issue[:\s\n]*([A-Za-z ]+)', "Place of Issue"),
+        (r'Date\s*of\s*Issue[:\s\n]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', "Date of Issue"),
+        (r'Date\s*of\s*Expiry[:\s\n]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', "Date of Expiry")
+    ],
+    "medical": [
+        (r'Patient\s*Name[:\s\n]*([A-Za-z ]+)', "Patient Name"),
+        (r'Doctor\'s\s*Name[:\s\n]*([A-Za-z\. ]+)', "Doctor Name"),
+        (r'Date[:\s\n]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', "Date"),
+        (r'Diagnosis[:\s\n]*([A-Za-z0-9 ,\-]+)', "Diagnosis"),
+        (r'Prescription[:\s\n]*([A-Za-z0-9 ,\-]+)', "Prescription"),
+        (r'Next\s*Visit[:\s\n]*([0-9]{2}[-/][0-9]{2}[-/][0-9]{4})', "Next Visit"),
+        (r'Hospital[:\s\n]*([A-Za-z ]+)', "Hospital")
     ]
+}
+
+def extract_fields(text, doc_type):
+    patterns = DOCUMENT_PATTERNS.get(doc_type, [])
     fields = {}
     for patt, label in patterns:
         match = re.search(patt, text, re.IGNORECASE)
@@ -34,15 +57,15 @@ def extract_fields(text):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global full_text_global
-
     all_fields = []
     all_texts = []
     summaries = []
-
     merged_summary = ""
-    
+
     if request.method == 'POST':
+        doc_type = request.form.get("doc_type", "invoice")
         files = request.files.getlist('file')
+
         for file in files:
             ext = file.filename.rsplit('.', 1)[-1].lower()
             images = []
@@ -60,18 +83,15 @@ def index():
 
             all_texts.append(full_text)
 
-            # Extract fields
-            fields = extract_fields(full_text)
+            fields = extract_fields(full_text, doc_type)
             all_fields.append(fields)
 
-            # Individual summary
             try:
                 summary = summarizer(full_text[:1024])[0]['summary_text']
             except:
                 summary = "Summary could not be generated."
             summaries.append(summary)
 
-        # Save full extracted fields to file
         with open("output.txt", "w") as f:
             for i, fieldset in enumerate(all_fields):
                 f.write(f"\n--- Document {i+1} ---\n")
@@ -79,8 +99,8 @@ def index():
                     f.write(f"{k}: {v}\n")
 
         pd.DataFrame(all_fields).to_excel("output.xlsx", index=False)
+        pd.DataFrame(all_fields).to_csv("output.csv", index=False) 
 
-        # Combined full text for merged summary and QnA
         combined_text = "\n".join(all_texts)
         full_text_global = combined_text
 
@@ -93,22 +113,28 @@ def index():
                                extracted=all_fields,
                                summary=merged_summary,
                                summaries=summaries)
-    
+
     return render_template("index.html", extracted=None)
 
-@app.route('/download/<filetype>')
+
+    @app.route('/download/<filetype>')
 def download(filetype):
     if filetype == "txt":
         return send_file("output.txt", as_attachment=True)
     elif filetype == "excel":
         return send_file("output.xlsx", as_attachment=True)
+    elif filetype == "csv":  # ✅ Add this block
+        return send_file("output.csv", as_attachment=True)
     return "File not found", 404
 
 @app.route('/ask', methods=['POST'])
 def ask():
+    global full_text_global  # <-- Add this line
+
     question = request.form.get("question")
     if not question:
         return jsonify({"answer": "No question provided."})
+
     if not full_text_global.strip():
         return jsonify({"answer": "Unable to generate answer. Try re-uploading the document."})
 
@@ -121,6 +147,7 @@ def ask():
     except Exception as e:
         print("QnA error:", str(e))
         return jsonify({"answer": "An error occurred while generating the answer."})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
